@@ -3,7 +3,7 @@ package org.deepsl.hrm.util.tag;
 import org.deepsl.hrm.util.common.HrmConstants;
 
 /**
- *  分页实体 
+ *  分页实体
  */
 public class PageModel {
 	/** 分页总数据条数  */
@@ -12,7 +12,7 @@ public class PageModel {
 	private int pageIndex ;
 	/** 每页分多少条数据   */
 	private int pageSize = HrmConstants.PAGE_DEFAULT_SIZE = 4;
-	
+
 	/** 总页数  */
 	private int totalSize;
 
@@ -27,7 +27,7 @@ public class PageModel {
 		this.pageIndex = this.pageIndex <= 0?1:this.pageIndex;
 		/** 判断当前页面是否超过了总页数:如果超过了默认给最后一页作为当前页  */
 		this.pageIndex = this.pageIndex>=this.getTotalSize()?this.getTotalSize():this.pageIndex;
-		
+
 		return pageIndex;
 	}
 	public void setPageIndex(int pageIndex) {
@@ -40,7 +40,7 @@ public class PageModel {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
-	
+
 	public int getTotalSize() {
 		if(this.getRecordCount() <=0){
 			totalSize = 0 ;
@@ -49,13 +49,13 @@ public class PageModel {
 		}
 		return totalSize;
 	}
-	
-	
+
+
 	public int getFirstLimitParam(){
 		return (this.getPageIndex()-1)*this.getPageSize() ;
 	}
-	
-	
-	
-	
+
+
+
+
 }

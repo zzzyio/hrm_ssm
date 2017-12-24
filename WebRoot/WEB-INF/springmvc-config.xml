@@ -1,45 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
 	   http://www.springframework.org/schema/beans 
 	   http://www.springframework.org/schema/beans/spring-beans.xsd
-	   http://www.springframework.org/schema/mvc
-	   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	   http://www.springframework.org/schema/context 
+	   http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/mvc 
+	   http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	   http://www.springframework.org/schema/tx 
+	   http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<!--注解驱动-->
-	<mvc:annotation-driven />
+    <!--扫描-->
+    <context:component-scan base-package="org.deepsl.hrm"></context:component-scan>
+    <!--<mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>-->
 
-	<!--<mvc:interceptors>
-	<mvc:interceptor>
-	<mvc:mapping path="/user/**"/>
-		<bean class="com.cskaoyan.interceptor.MyHandlerInterceptor"></bean>
-	</mvc:interceptor>
-	</mvc:interceptors>-->
+    <!--注解驱动-->
+    <mvc:annotation-driven></mvc:annotation-driven>
 
-	<!--文件上传-->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
-	<!--<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-		<property name="converters">
-			<set>
-				<bean class="com.cskaoyan.converter.MyDateConverter"></bean>
-			</set>
-		</property>
-	</bean>
-    -->
-	<mvc:resources location="/" mapping="/**/*.js"/>
-	<mvc:resources location="/" mapping="/**/*.css"/>
-	<mvc:resources location="/" mapping="/**/*.gif"/>
-	<mvc:resources location="/" mapping="/**/*.jpg"/>
-	<mvc:resources location="/" mapping="/**/*.png"/>
-	<mvc:resources location="/" mapping="/**/*.ttf"/>
-	<mvc:resources location="/" mapping="/**/*.woff"/>
+    <!--<mvc:interceptors>
+    <mvc:interceptor>
+    <mvc:mapping path="/user/**"/>
+        <bean class="com.cskaoyan.interceptor.MyHandlerInterceptor"></bean>
+    </mvc:interceptor>
+    </mvc:interceptors>-->
 
-	<!--自己指定视图解析器，并且加入解析视图的参数 -->
-	 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		 <property name="prefix" value="/WEB-INF/jsp/" />
-		<property name="suffix" value=".jsp" />
-	 </bean>
+    <!--文件上传-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
+
+    <!--<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.cskaoyan.converter.MyDateConverter"></bean>
+            </set>
+        </property>
+    </bean>
+
+-->
+
+    <mvc:resources location="/" mapping="/**/*.js"/>
+    <mvc:resources location="/" mapping="/**/*.css"/>
+    <mvc:resources location="/" mapping="/**/*.gif"/>
+    <mvc:resources location="/" mapping="/**/*.jpg"/>
+    <mvc:resources location="/" mapping="/**/*.png"/>
+    <mvc:resources location="/" mapping="/**/*.ttf"/>
+    <mvc:resources location="/" mapping="/**/*.woff"/>
+
+    <!--自己指定视图解析器，并且加入解析视图的参数 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
 </beans>
