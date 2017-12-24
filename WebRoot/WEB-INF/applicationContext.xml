@@ -14,28 +14,28 @@
 
 	<!-- mySqlSessionFactory 连接工厂 -->
 	<bean id="mySqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-	<property name="dataSource" ref="mydataSource"></property>
-	<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	<property name="dataSource" ref="mydataSource" />
+	<property name="configLocation" value="classpath:mybatis-config.xml" />
 	</bean>
 
 
 	<!-- 数据源 -->
 	<bean id="mydataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-	 <property name="user" value="root"></property>
-	      <property name="password" value="123456"></property>
-	      <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
-	      <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/Springlogindemo"></property>
+	 <property name="user" value="root" />
+	      <property name="password" value="123456" />
+	      <property name="driverClass" value="com.mysql.jdbc.Driver" />
+	      <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/Springlogindemo" />
 	</bean>
 
 	<!-- 事务管理 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-	<property name="dataSource" ref="mydataSource"></property>
+	<property name="dataSource" ref="mydataSource" />
 	</bean>
 
 	<!-- 代理对象dao生成 -->
 	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
-	<property name="mapperInterface" value="org.deepsl.hrm.dao.UserDao"></property>
-	<property name="sqlSessionFactory" ref="mySqlSessionFactory"></property>
+	<property name="mapperInterface" value="org.deepsl.hrm.dao.UserDao" />
+	<property name="sqlSessionFactory" ref="mySqlSessionFactory" />
 	</bean>
 
 
