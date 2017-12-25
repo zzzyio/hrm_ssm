@@ -57,7 +57,7 @@
 	    		$("#"+checkboxId).trigger("click");
 	    	})
 	    	
-	    	/** 删除员工绑定点击事件 */
+	    	/** 删除文档绑定点击事件 */
 	 	   $("#delete").click(function(){
 	 		   /** 获取到用户选中的复选框  */
 	 		   var checkedBoxs = boxs.filter(":checked");
@@ -150,15 +150,14 @@
 					<td><input type="checkbox" id="box_${stat.index}" value="${document.id}"></td>
 					 <td>${document.title }</td>
 					 <td>
-					  	<f:formatDate value="${document.createDate}" 
-								type="date" dateStyle="long"/>
+					  	<f:formatDate value="${document.createDate}" type="date" dateStyle="long" pattern="yyyy-MM-dd hh:MM"/>
 					  </td>
 					  <td>${document.user.username }</td>
 					  <td>${document.remark }</td>
 					 <td align="center" width="40px;"><a href="${ctx }/document/updateDocument?flag=1&id=${document.id}">
 							<img title="修改" src="${ctx }/images/update.gif"/></a>
 					  </td>
-					  <td align="center"  width="40px;"><a href="#" id="down_${document.id }">
+					  <td align="center"  width="40px;"><a href="${ctx }/document/downLoad?fileName=${document.fileName}" id="down_${document.id }">
 							<img width="20" height="20" title="下载" src="${ctx }/images/downLoad.png"/></a>
 					  </td>
 				</tr>
@@ -174,7 +173,7 @@
 	  	      pageIndex="${pageModel.pageIndex}" 
 	  	      pageSize="${pageModel.pageSize}" 
 	  	      recordCount="${pageModel.recordCount}" 
-	  	      submitUrl="${ctx}/document/selectDocument.action?pageModel.pageIndex={0}&document.title=${document.title}"
+	  	      submitUrl="${ctx}/document/selectDocument?pageModel.pageIndex={0}&document.title=${document.title}"
 	  	      style="flickr"
 	  	      />
 	  </td></tr>
