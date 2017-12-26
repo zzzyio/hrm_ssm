@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
     <update id="update" parameterType="user">
         UPDATE t_user set username = #{username}, loginname = #{loginname}, password = #{password},
-                          status = #{status}, createDate = #{createDate} WHERE id = #{id};
+                          status = #{status} WHERE id = #{id};
     </update>
 
     <insert id="save" parameterType="user">
