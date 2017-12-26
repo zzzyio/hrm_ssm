@@ -44,4 +44,5 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     <update id="update" parameterType="dept">
         UPDATE  dept_inf set  name = #{name} ,remark = #{remark} WHERE id = #{id};
     </update>
+
 </mapper>
