@@ -39,7 +39,7 @@ public class UserController {
 	 * @param String password 密码
 	 * @return 跳转的视图
 	 * */
-	@RequestMapping("/login")
+	@RequestMapping("login")
 	 public ModelAndView login(@RequestParam("loginname") String loginname,
 			 @RequestParam("password") String password,
 			 HttpSession session,
@@ -59,6 +59,13 @@ public class UserController {
 		}
 		return mv;
 	}
+
+	@RequestMapping("logout.action")
+    public String logout(HttpServletRequest request) {
+	    request.getSession().invalidate();
+	    return "loginForm";
+    }
+
 
 	@RequestMapping("user/preAddUser")
 	public String preAddUser() {
