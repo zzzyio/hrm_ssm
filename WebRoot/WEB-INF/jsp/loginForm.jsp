@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -87,7 +88,7 @@
 				style="font-size: 13px;">1.0</span> 系统
 			</a>
 		</div>
-		<form action="login" method="post" id="loginForm">
+		<form action="user/login" method="post" id="loginForm">
 			<div class="page-body">
 				<img class="page-lock-img"
 					src="${ctx}/js/metronic/img/profile/logo2.jpg" alt="">
