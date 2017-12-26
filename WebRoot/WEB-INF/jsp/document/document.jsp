@@ -157,7 +157,7 @@
 					 <td align="center" width="40px;"><a href="${ctx }/document/updateDocument?flag=1&id=${document.id}">
 							<img title="修改" src="${ctx }/images/update.gif"/></a>
 					  </td>
-					  <td align="center"  width="40px;"><a href="${ctx }/document/downLoad?fileName=${document.fileName}" id="down_${document.id }">
+					  <td align="center"  width="40px;"><a href="${ctx }/document/downLoad?id=${document.id}" id="down_${document.id }">
 							<img width="20" height="20" title="下载" src="${ctx }/images/downLoad.png"/></a>
 					  </td>
 				</tr>

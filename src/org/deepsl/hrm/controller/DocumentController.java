@@ -1,36 +1,25 @@
 package org.deepsl.hrm.controller;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.io.FileUtils;
-import org.deepsl.hrm.dao.DocumentDao;
 import org.deepsl.hrm.domain.Document;
-import org.deepsl.hrm.domain.User;
 import org.deepsl.hrm.service.DocumentService;
-import org.deepsl.hrm.service.HrmService;
-import org.deepsl.hrm.util.common.HrmConstants;
 import org.deepsl.hrm.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @version V1.0
@@ -44,9 +33,13 @@ public class DocumentController
     @Autowired
     DocumentService documentService;
 
-    //=======================增加document==============================
+    /**
+     * 增加document
+     * @param flag
+     * @return
+     */
     @RequestMapping("addDocument")
-    public String preAddDocument(int flag)
+    public String preAddDocument(Integer flag)
     {
         if (flag == 1)
         {
@@ -65,7 +58,7 @@ public class DocumentController
         if (!file.isEmpty())
         {
             //得到文件上传的数据，保存到指定的file，用uuid随机生成一个数，加上原文件名作为新的文件名保存到数据库。
-            String fileName = UUID.randomUUID().toString().replace("-","") + file.getOriginalFilename();
+            String fileName = UUID.randomUUID().toString().replace("-","") + "_" + file.getOriginalFilename();
             //获取保存文件的服务器的绝对路径
             String documentUploadDir = request.getServletContext().getRealPath("WEB-INF/DocumentUpload");
             //把临时文件保存到指定的路径
@@ -86,12 +79,20 @@ public class DocumentController
             } catch (IOException e)
             {
                 e.printStackTrace();
+                return "404";
             }
 
         }
         return "forward:selectDocument";
     }
-    //=======================更新document==============================
+
+    /**
+     * 更新document
+     * @param flag
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping("updateDocument")
     public String preUpdateDocument(int flag, int id, Model model)
     {
@@ -151,8 +152,14 @@ public class DocumentController
         return "forward:selectDocument";
     }
 
-
-    //=======================删除document==============================
+    /**
+     * 删除document
+     * @param ids
+     * @param request
+     * @param pageModel
+     * @param model
+     * @return
+     */
     @RequestMapping("removeDocument")
     public String removeDocument(Integer[] ids, HttpServletRequest request, PageModel pageModel, Model model)
     {
@@ -166,29 +173,54 @@ public class DocumentController
         return "forward:selectDocument";
     }
 
-    //=======================下载document==============================
+    /**
+     * 下载document
+     * @param request
+     * @param id
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("downLoad")
-    public ResponseEntity<byte[]> downLoad(HttpServletRequest request, String fileName) throws IOException
+    public ResponseEntity<byte[]> downLoad(HttpServletRequest request, Integer id) throws IOException
     {
-        //去哪里下载？获取到文件的保存路径
-        String realPath = request.getServletContext().getRealPath("WEB-INF/DocumentUpload");
-        File file = new File(realPath + File.separator + fileName);
+        if (id != null)
+        {
+            Document documentById = documentService.findDocumentById(id);
+            //文件名
+            String fileName = documentById.getFileName();
+            //标题名
+            String title = documentById.getTitle();
 
-        HttpHeaders headers = new HttpHeaders();
+            //去哪里下载？获取到文件的保存路径
+            String realPath = request.getServletContext().getRealPath("WEB-INF/DocumentUpload");
+            File file = new File(realPath + File.separator + fileName);
 
-        //下载显示的文件名，解决中文名称乱码问题
-        String downloadFielName = new String(fileName.getBytes("UTF-8"), "iso-8859-1");
+            HttpHeaders headers = new HttpHeaders();
 
-        //通知浏览器以attachment（下载方式）打开图片
-        headers.setContentDispositionFormData("attachment", downloadFielName);
+            //下载显示的文件名，解决中文名称乱码问题。这里使用title名为文件名。不想让用户看到保存到数据库中的文件名的uuid一长串。
+            String substring = fileName.substring(fileName.lastIndexOf(".") + 1);//截取文件后缀名
+            String titleName = title + "." + substring;//组合成新的下载名。
+            String downloadFielName = new String(titleName.getBytes("UTF-8"), "iso-8859-1");//解决中文名乱码
 
-        //application/octet-stream ： 二进制流数据（最常见的文件下载）。
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            //通知浏览器以attachment（下载方式）打开图片
+            headers.setContentDispositionFormData("attachment", downloadFielName);
 
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+            //application/octet-stream ： 二进制流数据（最常见的文件下载）。
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+        }
+        return null;//这里应该人性化地返回一个异常页面……
     }
 
-    //=======================查找document，查询结果分页==============================
+    /**
+     * 查找document，查询结果分页
+     * @param document
+     * @param request
+     * @param pageModel
+     * @param model
+     * @return
+     */
     @RequestMapping("selectDocument")
     public String selectDocument(Document document, HttpServletRequest request, PageModel pageModel, Model model)
     {
