@@ -28,7 +28,7 @@
 		<property name="user" value="root" />
 	    <property name="password" value="123456" />
 	    <property name="driverClass" value="com.mysql.jdbc.Driver" />
-	    <property name="jdbcUrl" value="jdbc:mysql://192.168.6.5/hrm" />
+	    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/hrm_ssm" />
 	</bean>
 
 	<!-- 事务管理 -->
@@ -41,4 +41,10 @@
 		<property name="mapperInterface" value="org.deepsl.hrm.dao.UserDao" />
 		<property name="sqlSessionFactory" ref="mySqlSessionFactory" />
 	</bean>
+	<!--代理对象documentDao生成-->
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="org.deepsl.hrm.dao.DocumentDao"/>
+		<property name="sqlSessionFactory" ref="mySqlSessionFactory" />
+	</bean>
+
 </beans>

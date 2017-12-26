@@ -18,7 +18,8 @@ public interface DocumentDao {
 	 
 	List<Document> selectByPage(Map<String, Object> params);
 		
- 	Integer count(Map<String, Object> params);
+ 	//Integer count(Map<String, Object> params);
+	Integer count();
 		
 	// 动态插入文档
  	void save(Document document);
