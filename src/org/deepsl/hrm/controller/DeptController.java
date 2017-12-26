@@ -1,6 +1,5 @@
 package org.deepsl.hrm.controller;
 
-import org.deepsl.hrm.dao.DeptDao;
 import org.deepsl.hrm.domain.Dept;
 import org.deepsl.hrm.service.DeptService;
 import org.deepsl.hrm.util.tag.PageModel;
@@ -24,8 +23,7 @@ public class DeptController {
     @Autowired
     DeptService deptService;
 
-    @Autowired
-    DeptDao deptDao;
+
 
     @RequestMapping("selectDept")
     public String selectDept(Dept dept ,PageModel pageModel, HttpServletRequest request){
