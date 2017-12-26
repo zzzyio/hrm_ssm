@@ -15,19 +15,17 @@
 	   http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!--扫描-->
-    <context:component-scan base-package="org.deepsl.hrm"></context:component-scan>
+    <context:component-scan base-package="org.deepsl.hrm.controller"></context:component-scan>
     <!--<mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>-->
 
     <!--注解驱动-->
     <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:default-servlet-handler />
 
 
-    <!--<mvc:interceptors>
-    <mvc:interceptor>
-    <mvc:mapping path="/user/**"/>
-        <bean class="com.cskaoyan.interceptor.MyHandlerInterceptor"></bean>
-    </mvc:interceptor>
-    </mvc:interceptors>-->
+    <mvc:interceptors>
+        <bean class="org.deepsl.hrm.interceptor.AuthorizedInterceptor"/>
+    </mvc:interceptors>
 
     <!--文件上传-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
