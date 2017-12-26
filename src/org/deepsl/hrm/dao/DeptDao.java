@@ -1,12 +1,10 @@
 package org.deepsl.hrm.dao;
 
-import java.util.List;
-import java.util.Map;
-
-
 import org.deepsl.hrm.domain.Dept;
 
-import static org.deepsl.hrm.util.common.HrmConstants.DEPTTABLE;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**   
  * @Description: DeptMapper接口  
@@ -25,7 +23,7 @@ public interface DeptDao {
 	Dept selectById(int id);
 
 	// 根据id删除部门
-	void deleteById(Integer id);
+	void deleteById(ArrayList<Integer> integers);
 	
 	// 动态插入部门
 	void save(Dept dept);

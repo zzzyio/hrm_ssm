@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.deepsl.hrm.dao.JobDao">
+    <select id="selectById" parameterType="int" resultType="job">
+        SELECT * FROM t_job WHERE id = #{id};
+    </select>
+
+    <select id="selectAllJob" resultType="job">
+        SELECT * FROM t_job;
+    </select>
+
+    <sql id="selectJob">
+        <where>
+            <if test="job.name != null and job.name != ''">
+                AND name LIKE '%${job.name}%'
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectByPage" parameterType="hashmap" resultType="job">
+        SELECT * FROM t_job
+        <include refid="selectJob" />
+        limit ${(pageModel.pageIndex - 1) * pageModel.pageSize}, ${pageModel.pageSize};
+    </select>
+
+    <select id="count" parameterType="hashmap" resultType="int">
+        SELECT COUNT(*) FROM t_job
+        <include refid="selectJob" />
+        ;
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM t_job WHERE id = #{id};
+    </delete>
+
+    <insert id="save" parameterType="job">
+        insert into t_job VALUES (NULL, #{name}, #{remark});
+    </insert>
+
+    <update id="update" parameterType="job">
+        UPDATE t_job SET name = #{name}, remark = #{remark} WHERE id = #{id};
+    </update>
+</mapper>

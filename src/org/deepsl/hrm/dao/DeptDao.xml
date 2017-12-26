@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.deepsl.hrm.dao.DeptDao">
+
+    <!--剩下两个动态查询-->
+    <select id="selectByPage" parameterType="hashmap" resultType="dept">
+        SELECT  * FROM  dept_inf
+        <where>
+            <if test="name != null and name !='' ">and name LIKE  '%${name}%'</if>
+        </where>
+        <if test="limit != null and limit !='' "> limit  #{limit}  offset  #{offset}</if>
+    </select>
+
+    <select id="count" parameterType="hashmap" resultType="int" >
+        SELECT  count(*) FROM  dept_inf
+        <where>
+            <if test="name != null and name !='' ">and name LIKE '%${name}%'</if>
+        </where>
+    </select>
+
+    <select id="selectAllDept" resultType="dept" >
+       SELECT  * from dept_inf ;
+    </select>
+  
+   <select id="selectById" parameterType="int" resultType="dept" >
+       SELECT  * from dept_inf WHERE  id = #{id} ;
+   </select>
+
+    <delete id="deleteById" parameterType="java.util.ArrayList"  >
+        DELETE FROM  dept_inf  
+        <where>
+            <foreach collection="list" item="item" separator="," open=" id in (" close=")">
+                #{item}
+            </foreach>
+        </where>
+    </delete>
+
+    <insert id="save" parameterType="dept" >
+        INSERT  INTO  dept_inf VALUES (NULL ,#{name},#{remark});
+    </insert>
+
+    <update id="update" parameterType="dept">
+        UPDATE  dept_inf set  name = #{name} ,remark = #{remark} WHERE id = #{id};
+    </update>
+
+</mapper>
