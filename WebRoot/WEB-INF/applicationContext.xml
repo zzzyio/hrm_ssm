@@ -26,9 +26,9 @@
 	<!-- 数据源 -->
 	<bean id="mydataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="user" value="root" />
-	    <property name="password" value="123456" />
+	    <property name="password" value="100788" />
 	    <property name="driverClass" value="com.mysql.jdbc.Driver" />
-	    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/hrm_ssm" />
+	    <property name="jdbcUrl" value="jdbc:mysql://192.168.6.5/hrm" />
 	</bean>
 
 	<!-- 事务管理 -->
@@ -38,13 +38,15 @@
 
 	<!-- 代理对象dao生成 -->
 	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="org.deepsl.hrm.dao.UserDao" />
-		<property name="sqlSessionFactory" ref="mySqlSessionFactory" />
-	</bean>
-	<!--代理对象documentDao生成-->
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="org.deepsl.hrm.dao.DocumentDao"/>
+		<property name="mapperInterface" value="org.deepsl.hrm.dao.DeptDao" />
 		<property name="sqlSessionFactory" ref="mySqlSessionFactory" />
 	</bean>
 
+
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!--指定要扫描包： 多个包用逗号隔开 -->
+		<property name="basePackage" value="org.deepsl.hrm.dao" />
+
+	</bean>
 </beans>
