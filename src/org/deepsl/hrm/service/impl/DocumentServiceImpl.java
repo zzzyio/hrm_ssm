@@ -29,8 +29,8 @@ public class DocumentServiceImpl implements DocumentService
 
         if (pageModel != null)
         {
-            //分页的条目数，已经默认为4，可以自己在这里更改。
-            pageModel.setPageSize(2);
+            //分页的条目数，已经默认为4，可以自己在这里更改。但是要大于4才能成功，因为原get方法的条件限制了。当然也可以直接在原来的方法那里改。
+            pageModel.setPageSize(5);
             //从数据库获得总的条目数
             pageModel.setRecordCount(documentDao.count());
             //分页的偏移

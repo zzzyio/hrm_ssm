@@ -2,7 +2,9 @@ package org.deepsl.hrm.controller;
 
 import org.apache.commons.io.FileUtils;
 import org.deepsl.hrm.domain.Document;
+import org.deepsl.hrm.domain.User;
 import org.deepsl.hrm.service.DocumentService;
+import org.deepsl.hrm.util.common.HrmConstants;
 import org.deepsl.hrm.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -67,7 +69,9 @@ public class DocumentController
             document.setFileName(fileName);
             //上传的时间
             document.setCreateDate(new Date());
-            //上传的用户id是……
+            //上传的用户
+            User user = (User) request.getSession().getAttribute(HrmConstants.USER_SESSION);
+            document.setUser(user);
 
             try
             {
